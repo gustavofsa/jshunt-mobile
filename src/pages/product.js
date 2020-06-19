@@ -1,9 +1,8 @@
 import React from 'react';
+import { WebView } from 'react-native-webview'
 
-import { Text } from 'react-native';
-
-const Product = () => (
-  <Text>Product</Text>
+const Product = ({ route }) => (
+  <WebView source={{ uri: route.params.url }} />
 );
 
 export default Product;
