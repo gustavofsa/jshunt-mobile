@@ -24,12 +24,13 @@ const Routes = () => {
         <Stack.Screen
           name="Product"
           component={Product}
-          options={{
+          options={({ route }) => ({
+            title: route.params.title,
             headerStyle: {
               backgroundColor: '#DA552F',
             },
             headerTintColor: '#FFF',
-          }}
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -37,7 +37,7 @@ const Main = () => {
         <Text style={styles.productDescription}>{item.description}</Text>
         <TouchableOpacity
           style={styles.productButton}
-          onPress={() => { navigation.navigate('Product', { product: item }) }}
+          onPress={() => { navigation.navigate('Product', { title: item.title }) }}
         >
           <Text style={styles.productButtonText}>Acessar</Text>
         </TouchableOpacity>
