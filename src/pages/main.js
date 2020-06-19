@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 
 import api from '../services/api';
 
@@ -18,15 +18,21 @@ const Main = () => {
     loadProducts();
   }, [])
 
+  function renderProduct({ item }) {
+    return (
+      <View>
+        <Text>{item.title}</Text>
+        <Text>{item.description}</Text>
+      </View>
+    );
+  }
+
   return (
     <View>
-      {products.map(product => (
-        <View key={product._id}>
-          <Text>{product.title}</Text>
-          <Text>{product.description}</Text>
-          <Text>{product.url}</Text>
-        </View>
-      ))}
+      <FlatList
+        data={products}
+        renderItem={renderProduct}
+      />
     </View>
   );
 }
