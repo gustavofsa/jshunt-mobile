@@ -1,22 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 
 import api from '../services/api';
 
 const Main = () => {
   const [products, setProducts] = useState([]);
+  const [productInfo, setProductInfo] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    async function loadProducts() {
-      const response = await api.get('/products');
+    loadProducts(page);
+  }, [page]);
 
-      const { docs } = response.data;
+  async function loadProducts(page = 1) {
+    const response = await api.get(`/products?page=${page}`);
 
-      setProducts(docs);
-    };
+    const { docs, ...productInfo } = response.data;
 
-    loadProducts();
-  }, [])
+    setProducts([...products, ...docs]);
+    setProductInfo(productInfo);
+  };
+
+  const onLoadMore = () => {
+    if (page === productInfo.pages) return;
+
+    setPage(page + 1);
+  }
 
   function handleDetail() {
 
@@ -41,6 +50,8 @@ const Main = () => {
         data={products}
         keyExtractor={item => item._id}
         renderItem={renderProduct}
+        onEndReached={onLoadMore}
+        onEndReachedThreshold={0.1}
       />
     </View>
   );
