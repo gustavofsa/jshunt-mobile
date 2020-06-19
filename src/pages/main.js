@@ -16,16 +16,12 @@ const Main = () => {
     };
 
     loadProducts();
-
-    console.log(products);
   }, [])
-
-
 
   return (
     <View>
       {products.map(product => (
-        <View key={product.id}>
+        <View key={product._id}>
           <Text>{product.title}</Text>
           <Text>{product.description}</Text>
           <Text>{product.url}</Text>
