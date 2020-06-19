@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import api from '../services/api';
 
@@ -7,6 +8,8 @@ const Main = () => {
   const [products, setProducts] = useState([]);
   const [productInfo, setProductInfo] = useState([]);
   const [page, setPage] = useState(1);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     loadProducts(page);
@@ -27,16 +30,15 @@ const Main = () => {
     setPage(page + 1);
   }
 
-  function handleDetail() {
-
-  }
-
   function renderProduct({ item }) {
     return (
       <View style={styles.productContainer}>
         <Text style={styles.productTitle}>{item.title}</Text>
         <Text style={styles.productDescription}>{item.description}</Text>
-        <TouchableOpacity style={styles.productButton} onPress={handleDetail}>
+        <TouchableOpacity
+          style={styles.productButton}
+          onPress={() => { navigation.navigate('Product', { product: item }) }}
+        >
           <Text style={styles.productButtonText}>Acessar</Text>
         </TouchableOpacity>
       </View>
